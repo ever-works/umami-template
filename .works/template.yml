@@ -1,9 +1,12 @@
 # The App Blueprint repository's own metadata (never applied to a Work, never copied into a user's
 # repositories — it is read only by the catalog/resolver).
 #
-# This repository is the METADATA-ONLY seed of the App Blueprint for Umami: it holds the App spec and this
-# file, and no application source. The application lives in `source.repo` below and is forked separately
-# when a member creates an App Work from this Blueprint.
+# This repository is the METADATA-ONLY App Blueprint for Umami: it holds our metadata and no application
+# source. The application lives in `source.repo` below and is forked separately when a member creates an
+# App Work from this Blueprint.
+#
+# The App spec is `.works/works.yml`, the specification's default path and the only file the platform's
+# Blueprint resolver reads, so no `specPath` is set.
 #
 # Field meanings and the shape rules are the resolution specification's §2.1 (T1-T8).
 
@@ -18,8 +21,3 @@ source:
     repo: umami-software/umami # owner/name of the upstream project; never this repository (T5)
     defaultBranch: master
     refs: { branches: [master], tags: '>=3.4.0' } # the releases this Blueprint's pin was read from
-
-# Where the App spec lives in this repository. The specification's default is `.works/works.yml`; this
-# repository keeps it at the root as `app-spec.yml` so the templates listing can validate every spec with
-# one path convention.
-specPath: app-spec.yml
