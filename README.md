@@ -18,6 +18,7 @@ specification's, not the upstream project's.
 | Path | What it is |
 | --- | --- |
 | [`app-spec.yml`](./app-spec.yml) | the App spec itself — the file the platform applies |
+| [`.works/works.yml`](./.works/works.yml) | the same App spec, byte for byte, at the path the platform's Blueprint resolver reads (FR-43 / CONTRACTS §8); change it together with `app-spec.yml` |
 | [`.works/template.yml`](./.works/template.yml) | this repository's shape and app source, read by the catalog/resolver |
 
 **Not released, not verified.** Nothing here has run on a cluster, and `blueprint.sha` is a placeholder
