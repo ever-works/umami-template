@@ -80,12 +80,11 @@ in the platform specification's repository and do not resolve from here.
    pnpm 12.3.4, a dummy `DATABASE_URL` and `SKIP_DB_CHECK: 1`; `package.json`: `test` = `vitest run`, `lint` =
    `biome lint .`). They are recorded as commented entries under `checks` and apply once the strategy becomes
    `dockerfile`.
-7. **Whether the pod can roll out at all as drafted:** the image's user is the **name** `nextjs` (uid 1001), and
-   kubelet refuses a non-numeric image user under `runAsNonRoot` unless `runAsUser` is set. When this was written,
-   `schema.md` §10 had no user field, so the Blueprint could not declare the uid (recorded as
-   `TODO(contract, APW-03)` in `.works/works.yml`). The platform's App spec schema has since gained an optional
-   numeric `components[].runAsUser` (APW06-G26); `.works/works.yml` does not declare `runAsUser: 1001` yet — that
-   is the follow-up change. Until then it needs a deploy target that allows root.
+7. **Resolved:** the image's user is the **name** `nextjs` (uid 1001), and kubelet refuses a non-numeric image
+   user under `runAsNonRoot` unless `runAsUser` is set. The platform's App spec schema gained an optional numeric
+   `components[].runAsUser` (APW06-G26), and `.works/works.yml` now declares `runAsUser: 1001` for the `web`
+   component (read from `adduser --system --uid 1001 nextjs`, Dockerfile L60 at the pinned commit `ec0ff503`).
+   Still unverified: a rollout on a real cluster.
 
 ## Evolving an Umami App Work
 
@@ -130,8 +129,8 @@ at least 12 characters (the upstream's own API floor is 8). Smoke tests assert `
 
 ## Known limits
 
-- The pod's image user is a **name** (`nextjs`), so it cannot roll out under the platform's `runAsNonRoot` default
-  until `.works/works.yml` declares `runAsUser` — see the unverified list.
+- The image's user is a **name** (`nextjs`); `.works/works.yml` declares its uid (`runAsUser: 1001`) so the pod
+  can run under the platform's `runAsNonRoot` default. A cluster rollout has not been verified yet.
 - With `strategy: image`, a change merged into the fork is not rebuilt (see _Evolving an Umami App Work_).
 - The root filesystem is writable until a lane run proves it need not be.
 - Memory request and limit are unmeasured.

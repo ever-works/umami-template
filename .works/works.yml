@@ -52,9 +52,9 @@ spec:
       # then `USER nextjs`, L97) — a name, not the numeric uid. kubelet refuses a non-numeric image user under
       # `runAsNonRoot` unless `runAsUser` is set ("container has runAsNonRoot and image has non-numeric user (%s),
       # cannot verify user is non-root", kubernetes/pkg/kubelet/kuberuntime/security_context_others.go), and
-      # APW-06 plan §4.4 renders `runAsNonRoot: true` with no `runAsUser` (targetSettings `allowRoot: false`).
-      # TODO(contract, APW-03): an optional numeric `components[].runAsUser` (schema.md §10 has no user field
-      # today) is what this Blueprint needs; it will then declare `runAsUser: 1001` for the `web` component.
+      # APW-06 plan §4.4 renders `runAsNonRoot: true`, so the numeric uid must be declared here. The App spec's
+      # optional `components[].runAsUser` (1-4294967294, passed through verbatim) exists for exactly this case.
+      runAsUser: 1001 # verified: `adduser --system --uid 1001 nextjs` at the pinned commit ec0ff503, Dockerfile L60
       replicas: 1
       # verified: `scripts/start-docker.sh` runs `check-db.js`, `update-tracker.js` and then `node server.js`, and
       # `scripts/update-tracker.js` writes `public/script.js` ONLY when `COLLECT_API_ENDPOINT` is set — which this
