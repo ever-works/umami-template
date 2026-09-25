@@ -17,8 +17,7 @@ specification's, not the upstream project's.
 
 | Path | What it is |
 | --- | --- |
-| [`app-spec.yml`](./app-spec.yml) | the App spec itself — the file the platform applies |
-| [`.works/works.yml`](./.works/works.yml) | the same App spec, byte for byte, at the path the platform's Blueprint resolver reads (FR-43 / CONTRACTS §8); change it together with `app-spec.yml` |
+| [`.works/works.yml`](./.works/works.yml) | the App spec — the only file the platform's Blueprint resolver reads and applies (FR-43 / CONTRACTS §8) |
 | [`.works/template.yml`](./.works/template.yml) | this repository's shape and app source, read by the catalog/resolver |
 
 **Not released, not verified.** Nothing here has run on a cluster, and `blueprint.sha` is a placeholder
@@ -72,7 +71,7 @@ With `strategy: image`, a merged change in the fork does not reach the running a
   propose it, a person merges it.
 - **Stay on the image** and use the App Work for configuration, domains and upstream tracking only.
 
-The acceptance suite uses Umami for the runtime path and the fixture application and Cal.diy for the evolve loop
+The acceptance suite uses Umami for the runtime path and the fixture application and Cal for the evolve loop
 (see [ACCEPTANCE.md](../../../ACCEPTANCE.md)).
 
 ## Refreshing the pin
